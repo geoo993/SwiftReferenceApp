@@ -14,6 +14,8 @@ import Swiftz
 
 class StateMachineSpecs: QuickSpec 
 {    
+    
+    
     override func spec() 
     {
         let printer = beforeSuite { return app.transition.subscribeNext { print($0) }  }
@@ -34,7 +36,7 @@ class StateMachineSpecs: QuickSpec
                 expect(app.state).toEventually(equal(AppState.Idle))
             }
             
-            fit("moves App to Alerting for Trial User on the sixth Saved then, on successful purchase enables Save") 
+            it("moves App to Alerting for Trial User on the sixth Saved then, on successful purchase enables Save") 
             {
 
                 let sixthSaveTransition = AppTransition(

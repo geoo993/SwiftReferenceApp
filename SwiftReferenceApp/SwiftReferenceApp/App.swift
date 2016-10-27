@@ -24,13 +24,13 @@ public class App
     public var transition = Variable(initialTransition) 
     
     // FIXME: This initialization is incorrect and needs to read state from App.machine.
-    private var _hsmTransitionState = 
-        Variable((AppState.Initial, AppEvent.Start, AppState.Idle, UserState.Trial(count: 0))) 
+    //private var _hsmTransitionState = 
+      //  Variable((AppState.Initial, AppEvent.Start, AppState.Idle, UserState.Trial(count: 0))) 
     
 //    public lazy var hsmTransitionState : ReadOnlySubject<AppTransitionState> = {
 //        return self._hsmTransitionState >- readOnly 
 //    }()
-     
+    
     public var appState : Observable<AppState>
     public var appEvent: Observable<AppEvent>
     public var userState : Observable<UserState>

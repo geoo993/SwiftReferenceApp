@@ -1,0 +1,19 @@
+digraph {
+    graph [rankdir=LR]
+
+    0 [label="", shape=plaintext]
+    0 -> 1 [label="START"]
+
+    1 [label="Idle"]
+    2 [label="Saving"]
+    3 [label="Purchasing"]
+    4 [label="Alerting"]
+
+    1 -> 3 [label="Purchase"]
+    1 -> 2 [label="Save"]
+    2 -> 4 [label="Failed"]
+    2 -> 1 [label="Saved"]
+    3 -> 4 [label="Failed"]
+    3 -> 1 [label="Purchased"]
+    4 -> 1 [label="Complete"]
+}

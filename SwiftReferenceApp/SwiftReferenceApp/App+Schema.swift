@@ -25,6 +25,7 @@ extension App
         case AppState.Idle: switch event {
             case AppEvent.Save:
                 return (AppState.Saving, { app in 
+                    
                     let saver = app.createSaveTask()
                         .success { (str: String) -> String in 
                             app <- .Saved; return str 
@@ -32,6 +33,7 @@ extension App
                         .failure { errorInfo -> String in 
                             app <- .Failed; return "Error!" // FIXME: Unable to use $0  
                         } 
+                    
                     return .Saving })
                 
             case AppEvent.Purchase:

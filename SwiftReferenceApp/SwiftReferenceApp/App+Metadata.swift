@@ -7,6 +7,7 @@
 
 import SwiftyStateMachine
 
+
 public enum AppState {
     case Initial
     case Idle
