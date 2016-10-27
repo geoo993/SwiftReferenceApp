@@ -21,12 +21,12 @@ public class User
     
     public var machine : StateMachine<Schema>! 
     
-    //func hasApplicationAccess() -> Bool {
-        //switch machine.state {
-        //case .Trial(let saveCount) where saveCount > 5: return false
-        //default: return true
-        //}
-    //}
+    func hasApplicationAccess() -> Bool {
+        switch machine.state {
+        case .Trial(let saveCount) where saveCount > 5: return false
+        default: return true
+        }
+    }
     
     public init() {
         machine  = StateMachine(schema: User.schema, subject: self)

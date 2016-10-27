@@ -31,6 +31,11 @@ extension App
 
 infix operator <- { associativity left precedence 90}
 
+//public func <- (lhs: ReadingMode, rhs: AppReadModeEvent) -> ReadingMode {
+    //lhs.rMachine.handleEvent(rhs)
+    //return lhs
+//}
+
 public func <- (lhs: App, rhs: AppEvent) -> App {
     lhs.machine.handleEvent(rhs)
     return lhs

@@ -1,0 +1,20 @@
+digraph {
+    graph [rankdir=LR]
+
+    0 [label="", shape=plaintext]
+    0 -> 1 [label="START"]
+
+    1 [label="Initialising"]
+    2 [label="Resuming"]
+    3 [label="Reading"]
+    4 [label="Pausing"]
+    5 [label="Completing"]
+    6 [label="Ending"]
+
+    1 -> 3 [label="Start"]
+    2 -> 3 [label="Resume"]
+    3 -> 5 [label="Activate Reading"]
+    4 -> 2 [label="Pause"]
+    5 -> 6 [label="Activate Feedback"]
+    6 -> 1 [label="End"]
+}

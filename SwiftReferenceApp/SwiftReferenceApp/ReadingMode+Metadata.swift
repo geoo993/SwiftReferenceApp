@@ -43,7 +43,6 @@ public enum AppReadModeState {
     case ReadingState//reading activates reading event when touch pointer is activated
     case PauseState//pause when finger is lifted 
     case CompletedState//complete, this is when you finished reading the page and touch pointer is not touched
-    case FeedbackState//feedback when at end of the page
     case EndState//stop, reading has ended and you viewed your score
 }
 
@@ -254,7 +253,7 @@ extension AppReadModeState: DOTLabelable {
    
     public static var DOTLabelableItems: [AppReadModeState] 
     {
-        return [ .InitialState, .ResumeState, .ReadingState, .PauseState, .CompletedState, .FeedbackState, .EndState]
+        return [ .InitialState, .ResumeState, .ReadingState, .PauseState, .CompletedState, .EndState]
     }
     
     public var DOTLabel: String {
@@ -264,7 +263,6 @@ extension AppReadModeState: DOTLabelable {
         case .ReadingState: return "Reading"
         case .PauseState: return "Pausing"
         case .CompletedState: return "Completing"
-        case .FeedbackState: return "Showing Feedback"
         case .EndState: return "Ending"
         }
     }
@@ -285,7 +283,7 @@ extension AppReadModeEvent: DOTLabelable
         case .ActivateReading: return "Activate Reading"
         case .Failed: return "Failed"
         case .Pause: return "Pause"
-        case .Resume: return "resume"
+        case .Resume: return "Resume"
         case .End: return "End"
         case .ActivateFeedback: return "Activate Feedback"
         }

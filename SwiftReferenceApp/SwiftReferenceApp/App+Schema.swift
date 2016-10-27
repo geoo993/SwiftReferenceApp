@@ -28,7 +28,7 @@ extension App
                     
                     let saver = app.createSaveTask()
                         .success { (str: String) -> String in 
-                            app <- .Saved; return str 
+                            app <- AppEvent.Saved; return str 
                         }
                         .failure { errorInfo -> String in 
                             app <- .Failed; return "Error!" // FIXME: Unable to use $0  

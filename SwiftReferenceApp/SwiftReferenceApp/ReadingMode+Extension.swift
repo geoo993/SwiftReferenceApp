@@ -31,6 +31,4 @@ extension ReadingMode
         return rMachine.state
     }
     
-    
-
 }

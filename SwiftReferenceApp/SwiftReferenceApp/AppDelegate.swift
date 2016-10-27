@@ -19,8 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool 
     {
-        App.schema.saveDOTDigraphIfRunningInSimulator(filepathRelativeToCurrentFile: "App.schema.dot")
+        //App.schema.saveDOTDigraphIfRunningInSimulator(filepathRelativeToCurrentFile: "App.schema.dot")
         //return app.set(User()) 
+        ReadingMode.schema.saveDOTDigraphIfRunningInSimulator(filepathRelativeToCurrentFile: "ReadingMode.schema.dot")
         return app.set(User())
     }
 

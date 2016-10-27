@@ -9,9 +9,12 @@
 import Foundation
 import SwiftyStateMachine
 import RxSwift
+import UIKit
 
 public class ReadingMode 
 {
+    public var eventss = AppReadModeEvent.Begin
+    
     public static let rSharedInstance = ReadingMode()
     
     public var user: User!
@@ -45,8 +48,9 @@ public class ReadingMode
         rMachine.addDidTransitionCallback { oldState, event, newState, trace in 
             let appTransition = AppReadModeTransition( oldState: oldState, event:event, newState: newState, userState: self.user.machine.state ) 
             self.rTransition.value = appTransition
-            //            self._hsmTransitionState.next(hsmState)
+                        //self._hsmTransitionState.next(hsmState)
         }
     }
 
+    
 }
