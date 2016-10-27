@@ -14,15 +14,15 @@ extension App
         machine.handleEvent(event) 
     }
 
-    public func set(user: User) -> Bool 
-    {
-        self.user = user
+    //public func set(user: User) -> Bool 
+    //{
+        //self.user = user
         
-        machine.addDidTransitionCallback { oldState, event, newState, app in 
-           self.user[event] 
-        }
-        return true
-    }
+        //machine.addDidTransitionCallback { oldState, event, newState, app in 
+           //self.user[event] 
+        //}
+        //return true
+    //}
     
     public var state : AppState {
         return machine.state

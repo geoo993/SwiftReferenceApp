@@ -20,72 +20,87 @@ extension ReadingMode
             
             
         case AppReadModeState.InitialState : switch event {
-        //case AppEvent.Start:
-            //return (AppState.Idle, nil)
+            case AppReadModeEvent.Begin:
+                return (AppReadModeState.ReadingState, nil)
             
+            case AppReadModeEvent.Failed:
+                print("reading failed, return to initial")
+                return (AppReadModeState.InitialState, nil)
+            default: return nil
+            }
+        case AppReadModeState.ResumeState : switch event {
+            case AppReadModeEvent.Resume:
+                return (AppReadModeState.ReadingState, nil)
+            case AppReadModeEvent.Failed:
+                print("reading failed, return to initial")
+                return (AppReadModeState.InitialState, nil)
             default: return nil
             }
         case AppReadModeState.ReadingState: switch event {
-        //case AppEvent.Save:
-            //return (AppState.Saving, { app in 
-                
-                //let saver = app.createSaveTask()
-                    //.success { (str: String) -> String in 
-                        //app <- .Saved; return str 
-                    //}
-                    //.failure { errorInfo -> String in 
-                        //app <- .Failed; return "Error!" // FIXME: Unable to use $0  
-                //} 
-                
-                //return .Saving })
+            case AppReadModeEvent.ActivateReading:
             
-        //case AppEvent.Purchase:
-            //return (AppState.Purchasing, { app in 
-                //let purchaser = app.createPurchaseTask()
-                    //.success { isSaved -> Bool in 
-                        //app <- .Purchased; return isSaved 
-                    //}
-                    //.failure { errorInfo -> Bool in 
-                        //app <- .Failed; return false 
-                //} 
-                //return .Purchasing})
-            
+                print("now reading, you can either go to pause havent finished reading, or you go to end when finish reading")
+                
+                if arc4random_uniform(2) > 0 
+                { 
+                    print("you paused")
+                    return (AppReadModeState.PauseState, nil)
+                }else{
+                    print("you finished reading")
+                    return (AppReadModeState.CompletedState, nil)
+                }
+           
             default: return nil
             }
         case AppReadModeState.PauseState(let pause): switch event {
-        //case AppEvent.Saved:
-            //return (AppState.Idle, nil)
+            case AppEvent.Pause:
+                
+                if arc4random_uniform(2) > 0 
+                {
+                    print("you timed out")
+                    return (AppReadModeState.InitialState, nil)
+                }else{
+                    print("you are resuming reading")
+                    return (AppReadModeState.ResumeState, nil)
+                }
             
-        //case AppEvent.Failed:
-            //return (AppState.Alerting, { app in 
-                //let alerter = app.createAlertTask()
-                    //.success { saved in 
-                        //app <- .Complete; return saved 
-                    //}
-                    //.failure { errorInfo -> Bool in 
-                        //app <- .Failed; return false 
-                //} 
-                //return .Alerting })
-            
+            //case AppReadModeEvent.Failed:
+                //print("reading failed, return to initial")
+                //return (AppReadModeState.InitialState, nil)
             default: return nil
             }
             
+        case AppReadModeState.CompletedState: switch event {
+            
+            case AppReadModeEvent.ActivateFeedback: 
+                
+                print("you are now checking your score")
+                if arc4random_uniform(2) > 0 
+                {
+                    print("you can end")
+                    return (AppReadModeState.EndState, nil)
+                }else{
+                    print("you start again")
+                    return (AppReadModeState.InitialState, nil)
+                }
+            
+            default: return nil
+            }
+        
         case AppReadModeState.EndState(let end): switch event {
-        //case AppEvent.Purchased: 
-            //return (AppState.Idle, nil)
             
-        //case AppEvent.Failed:
-            //return (AppState.Alerting, nil)
-            
+            case AppReadModeEvent.End: 
+                print("you finshed reading, and saw your your score in feedback ")
+                return  nil
             default: return nil
             }
             
-        case AppReadModeState.FeedbackState(let feedback): switch event {
-        //case AppEvent.Complete: 
-            //return (.Idle, nil)
             
-            default: return nil
-            }
+        default: return nil
         }
+        
+        
+    
+        
     } 
 }

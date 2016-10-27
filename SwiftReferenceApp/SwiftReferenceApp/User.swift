@@ -16,22 +16,30 @@ public enum UserState
 
 public class User 
 {
-    public typealias Schema = GraphableStateMachineSchema<UserState, AppEvent, User> 
+    //public typealias Schema = GraphableStateMachineSchema<UserState, AppEvent, User> 
+    public typealias Schema = GraphableStateMachineSchema<UserState, AppReadModeEvent, User> 
     
     public var machine : StateMachine<Schema>! 
     
-    func hasApplicationAccess() -> Bool {
-        switch machine.state {
-        case .Trial(let saveCount) where saveCount > 5: return false
-        default: return true
-        }
-    }
+    //func hasApplicationAccess() -> Bool {
+        //switch machine.state {
+        //case .Trial(let saveCount) where saveCount > 5: return false
+        //default: return true
+        //}
+    //}
     
     public init() {
         machine  = StateMachine(schema: User.schema, subject: self)
     }
+    
+    
+    
  
-    public subscript(event: AppEvent) -> Void {
+    //public subscript(event: AppEvent) -> Void {
+        //machine.handleEvent(event)
+    //}
+    
+    public subscript(event: AppReadModeEvent) -> Void {
         machine.handleEvent(event)
     }
 }

@@ -8,8 +8,8 @@
 import UIKit
 import CoreData
 
-public let app = App.sharedInstance
-//public let app = ReadingMode.rSharedInstance
+//public let app = App.sharedInstance
+public let app = ReadingMode.rSharedInstance
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool 
     {
         App.schema.saveDOTDigraphIfRunningInSimulator(filepathRelativeToCurrentFile: "App.schema.dot")
-        return app.set(User()) 
-        
+        //return app.set(User()) 
+        return app.set(User())
     }
 
     func applicationWillResignActive(application: UIApplication) {
