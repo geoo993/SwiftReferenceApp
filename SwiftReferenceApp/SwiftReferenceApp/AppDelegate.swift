@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //App.schema.saveDOTDigraphIfRunningInSimulator(filepathRelativeToCurrentFile: "App.schema.dot")
         //return app.set(User()) 
         ReadingMode.schema.saveDOTDigraphIfRunningInSimulator(filepathRelativeToCurrentFile: "ReadingMode.schema.dot")
-        return app.set(User())
+        return true
     }
 
     func applicationWillResignActive(application: UIApplication) {

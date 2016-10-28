@@ -45,15 +45,10 @@
 		65FAA8C71B87B606000CC9D6 /* User+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FAA8C61B87B606000CC9D6 /* User+Schema.swift */; };
 		65FE069F1B8DD9DF0095295E /* SimpleAsyncSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FE069E1B8DD9DF0095295E /* SimpleAsyncSpec.swift */; };
 		C7DE0F5F1DC0BA1E00D6A69A /* ReadingMode+Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DE0F5E1DC0BA1E00D6A69A /* ReadingMode+Metadata.swift */; };
-		C7DE0F611DC0BA2F00D6A69A /* ListeningMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DE0F601DC0BA2F00D6A69A /* ListeningMode.swift */; };
-		C7DE0F631DC0BA3C00D6A69A /* ExploreMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DE0F621DC0BA3C00D6A69A /* ExploreMode.swift */; };
-		C7DE0F651DC0BA4B00D6A69A /* PlayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DE0F641DC0BA4B00D6A69A /* PlayMode.swift */; };
-		C7DE0F671DC0BA5900D6A69A /* CreateMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DE0F661DC0BA5900D6A69A /* CreateMode.swift */; };
-		C7DE0FAD1DC0CA7500D6A69A /* StoryPageModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DE0FAC1DC0CA7500D6A69A /* StoryPageModes.swift */; };
 		C7DE107F1DC1EDC600D6A69A /* ReadingMode+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DE107E1DC1EDC600D6A69A /* ReadingMode+Schema.swift */; };
 		C7DE10811DC1EEA500D6A69A /* ReadingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DE10801DC1EEA500D6A69A /* ReadingMode.swift */; };
 		C7DE10831DC2044800D6A69A /* ReadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DE10821DC2044800D6A69A /* ReadViewController.swift */; };
-		C7DE10851DC22EFC00D6A69A /* ReadingMode+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DE10841DC22EFC00D6A69A /* ReadingMode+Extension.swift */; };
+		C7E58F2F1DC3A902004C4FCC /* AppTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E58F2E1DC3A902004C4FCC /* AppTextView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -380,15 +375,10 @@
 		65FAA8C61B87B606000CC9D6 /* User+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Schema.swift"; sourceTree = "<group>"; };
 		65FE069E1B8DD9DF0095295E /* SimpleAsyncSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleAsyncSpec.swift; sourceTree = "<group>"; };
 		C7DE0F5E1DC0BA1E00D6A69A /* ReadingMode+Metadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ReadingMode+Metadata.swift"; sourceTree = "<group>"; };
-		C7DE0F601DC0BA2F00D6A69A /* ListeningMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListeningMode.swift; sourceTree = "<group>"; };
-		C7DE0F621DC0BA3C00D6A69A /* ExploreMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreMode.swift; sourceTree = "<group>"; };
-		C7DE0F641DC0BA4B00D6A69A /* PlayMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayMode.swift; sourceTree = "<group>"; };
-		C7DE0F661DC0BA5900D6A69A /* CreateMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateMode.swift; sourceTree = "<group>"; };
-		C7DE0FAC1DC0CA7500D6A69A /* StoryPageModes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryPageModes.swift; sourceTree = "<group>"; };
 		C7DE107E1DC1EDC600D6A69A /* ReadingMode+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ReadingMode+Schema.swift"; sourceTree = "<group>"; };
 		C7DE10801DC1EEA500D6A69A /* ReadingMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingMode.swift; sourceTree = "<group>"; };
 		C7DE10821DC2044800D6A69A /* ReadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadViewController.swift; sourceTree = "<group>"; };
-		C7DE10841DC22EFC00D6A69A /* ReadingMode+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ReadingMode+Extension.swift"; sourceTree = "<group>"; };
+		C7E58F2E1DC3A902004C4FCC /* AppTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTextView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -640,11 +630,6 @@
 			isa = PBXGroup;
 			children = (
 				C7DE107D1DC1EDAA00D6A69A /* ReadingMode */,
-				C7DE0FAC1DC0CA7500D6A69A /* StoryPageModes.swift */,
-				C7DE0F601DC0BA2F00D6A69A /* ListeningMode.swift */,
-				C7DE0F621DC0BA3C00D6A69A /* ExploreMode.swift */,
-				C7DE0F641DC0BA4B00D6A69A /* PlayMode.swift */,
-				C7DE0F661DC0BA5900D6A69A /* CreateMode.swift */,
 			);
 			name = Modes;
 			sourceTree = "<group>";
@@ -653,9 +638,9 @@
 			isa = PBXGroup;
 			children = (
 				C7DE10801DC1EEA500D6A69A /* ReadingMode.swift */,
-				C7DE10841DC22EFC00D6A69A /* ReadingMode+Extension.swift */,
 				C7DE0F5E1DC0BA1E00D6A69A /* ReadingMode+Metadata.swift */,
 				C7DE107E1DC1EDC600D6A69A /* ReadingMode+Schema.swift */,
+				C7E58F2E1DC3A902004C4FCC /* AppTextView.swift */,
 			);
 			name = ReadingMode;
 			sourceTree = "<group>";
@@ -1051,23 +1036,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7DE0F631DC0BA3C00D6A69A /* ExploreMode.swift in Sources */,
 				65FAA8BE1B877629000CC9D6 /* Global.swift in Sources */,
-				C7DE10851DC22EFC00D6A69A /* ReadingMode+Extension.swift in Sources */,
 				654F9F951B8759B60042F370 /* User.swift in Sources */,
 				6562162D1B87283E003F69C3 /* MainViewController.swift in Sources */,
-				C7DE0F611DC0BA2F00D6A69A /* ListeningMode.swift in Sources */,
 				65FAA8C71B87B606000CC9D6 /* User+Schema.swift in Sources */,
-				C7DE0F671DC0BA5900D6A69A /* CreateMode.swift in Sources */,
 				65B23AE31B8B306E0049D2DF /* App+Tasks.swift in Sources */,
 				C7DE0F5F1DC0BA1E00D6A69A /* ReadingMode+Metadata.swift in Sources */,
-				C7DE0F651DC0BA4B00D6A69A /* PlayMode.swift in Sources */,
 				656216281B87283E003F69C3 /* AppDelegate.swift in Sources */,
 				65FAA8BA1B8767B6000CC9D6 /* App+Extension.swift in Sources */,
 				C7DE10811DC1EEA500D6A69A /* ReadingMode.swift in Sources */,
 				65FAA8B91B876789000CC9D6 /* App.swift in Sources */,
 				C7DE10831DC2044800D6A69A /* ReadViewController.swift in Sources */,
-				C7DE0FAD1DC0CA7500D6A69A /* StoryPageModes.swift in Sources */,
+				C7E58F2F1DC3A902004C4FCC /* AppTextView.swift in Sources */,
 				65FAA8C51B87B52D000CC9D6 /* App+Schema.swift in Sources */,
 				6562F83C1BAEBE2C00906AE5 /* README.md in Sources */,
 				65FAA8BC1B877300000CC9D6 /* User+Extension.swift in Sources */,

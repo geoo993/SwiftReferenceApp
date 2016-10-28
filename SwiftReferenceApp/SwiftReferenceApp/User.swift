@@ -32,8 +32,6 @@ public class User
         machine  = StateMachine(schema: User.schema, subject: self)
     }
     
-    
-    
  
     //public subscript(event: AppEvent) -> Void {
         //machine.handleEvent(event)
@@ -42,6 +40,8 @@ public class User
     public subscript(event: AppReadModeEvent) -> Void {
         machine.handleEvent(event)
     }
+    
+    
 }
 
 

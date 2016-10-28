@@ -38,22 +38,50 @@ public enum AppPageState {
 
 //read mode
 public enum AppReadModeState {
-    case InitialState//you initialise by going to beginning
-    case ResumeState//you resume reading
-    case ReadingState//reading activates reading event when touch pointer is activated
-    case PauseState//pause when finger is lifted 
-    case CompletedState//complete, this is when you finished reading the page and touch pointer is not touched
-    case EndState//stop, reading has ended and you viewed your score
+    
+    case start//Started page
+    case initiasing//you initialise by going to beginning
+    //case ResumeState//you resume reading
+    case idle// initialsing complete so now waiting
+    case phonicsAssistance
+    case reading//reading activates reading event when touch pointer is activated
+    case recognising// figuring out what to do after reading ended
+    case computingNextStep// calcuating the word range of the next word
+    //case PauseState//pause when finger is lifted 
+    //case CompletedState//complete, this is when you finished reading the page and touch pointer is not touched
+    case feedback//feedback state to show score and progress
+    case end//stop, reading has ended and you viewed your score
 }
 
 public enum AppReadModeEvent  {
-    case Begin//go to start when initialised
-    case ActivateReading//when finger in on touch pointer, you activate reading
-    case Resume//this is to continue reading when paused
-    case Failed//when something fails
-    case Pause//when finger is lifted, you pause when its been less than 30 sec and false to all other ifs
-    case End//when finger is lifted, you ended when its been more than 30 sec and true to all other ifs 
-    case ActivateFeedback//activate feedback when completed
+    case begin(focus: Range<Int>)//go to start when initialised
+    //case Resume//this is to continue reading when paused
+    case failed//when something fails
+    case startReading//when finger in on touch pointer, you activate reading
+    case startPhonicsAssistance// start phonics breakdown
+    case complete// theres, reading complete, phonics assistance complete, recognising complete, next step complete  
+    //case pause//when finger is lifted, you pause when its been less than 30 sec and false to all other ifs
+    //case end//when finger is lifted, you ended when its been more than 30 sec and true to all other ifs 
+    case reset//reset and go to the beginning
+    case startFeedback//activate feedback when completed
+}
+
+extension AppReadModeEvent : Equatable { }
+
+public func ==(lhs: AppReadModeEvent, rhs: AppReadModeEvent) -> Bool {
+    switch (lhs, rhs) {
+    case (.begin, .begin), 
+         (.failed, .failed),
+         (.startReading, .startReading),
+        // (.Resume, .Resume),
+        (.startPhonicsAssistance, .startPhonicsAssistance),
+        //(.Pause, .Pause),
+        (.complete, .complete),
+        (.reset, .reset),
+        (.startFeedback, .startFeedback):
+            return true
+    default: return false
+    }
 }
 
 //image
@@ -70,29 +98,6 @@ public enum AppImageEvent {
     
 }
 
-//text
-public enum AppTextState {
-    
-    case ScrollingOn
-    case ScrollingOff
-    case ResetContentOffsetToLatestReading
-    case Fading
-    case ShowTextState
-    case HideTextState
-
-}
-
-public enum AppTextEvent {
-    
-    case ScrollingEnabled
-    case ScrollingDisabled
-    case UpdateContentOffset
-    case EnableBlur
-    case DisableBlur
-    case ShowText
-    case HideText
-    
-}
 
 //phonics breakdown
 public enum AppPhonicsAssistanceServicesState{
@@ -244,26 +249,23 @@ public enum AppScoreEvent {
 // MARK: AppState DOTLabelable extension
 extension AppReadModeState: DOTLabelable {
     
-    //func isSaving() -> Bool {
-        //switch self {
-        //case .Saving: return true
-        //default: return false
-        //}
-    //}
-   
+    
     public static var DOTLabelableItems: [AppReadModeState] 
     {
-        return [ .InitialState, .ResumeState, .ReadingState, .PauseState, .CompletedState, .EndState]
+        return [ .start, .initiasing, .idle, .reading, .phonicsAssistance, .recognising, .computingNextStep, .feedback, .end]
     }
     
     public var DOTLabel: String {
         switch self {
-        case .InitialState: return "Initialising"
-        case .ResumeState: return "Resuming"
-        case .ReadingState: return "Reading"
-        case .PauseState: return "Pausing"
-        case .CompletedState: return "Completing"
-        case .EndState: return "Ending"
+        case .start: return "Starting"
+        case .initiasing: return "Initialising"
+        case .idle: return "Idle"
+        case .reading: return "Reading"
+        case .phonicsAssistance: return "Phonics Assistance"
+        case .recognising: return "Recognising"
+        case .computingNextStep : return "Computing Next Step"
+        case .feedback: return "Feedback and score"
+        case .end : return "Ending"
         }
     }
 }
@@ -274,21 +276,24 @@ extension AppReadModeEvent: DOTLabelable
     
     public static var DOTLabelableItems: [AppReadModeEvent] 
     {
-        return [.Begin, .ActivateReading, .Failed, .Pause, .Resume, .End, .ActivateFeedback]
+        return [.begin(focus: 0..<0), .startReading, .startPhonicsAssistance, .failed, .complete, .reset, .startFeedback]
     }
     
     public var DOTLabel: String {
         switch self {
-        case .Begin: return "Start"
-        case .ActivateReading: return "Activate Reading"
-        case .Failed: return "Failed"
-        case .Pause: return "Pause"
-        case .Resume: return "Resume"
-        case .End: return "End"
-        case .ActivateFeedback: return "Activate Feedback"
+        case .begin: return "Begin"
+        case .startReading: return "Start Reading"
+        case .startPhonicsAssistance: return "Start Phonics Assistance"
+        case .failed: return "Failed"
+        //case .Pause: return "Pause"
+        //case .Resume: return "Resume"
+        case .complete: return "Complete"
+        case .reset: return "Reset"
+        case .startFeedback: return "Start Feedback"
         }
     }
 }
+
 
 // MARK: Add printable conformance
 extension AppReadModeState : CustomStringConvertible {
@@ -308,20 +313,19 @@ extension AppReadModeEvent : CustomDebugStringConvertible {
 }
 
 
-public typealias AppReadModeTransitionState = (AppReadModeState, AppReadModeEvent, AppReadModeState, UserState)
+public typealias AppReadModeTransitionState = (AppReadModeState, AppReadModeEvent, AppReadModeState)
 
 public struct AppReadModeTransition {
     public let oldState : AppReadModeState
     public let event : AppReadModeEvent
     public let newState : AppReadModeState
-    public let userState : UserState
     
-    public init(oldState: AppReadModeState, event: AppReadModeEvent, newState: AppReadModeState, userState: UserState) 
+    public init(oldState: AppReadModeState, event: AppReadModeEvent, newState: AppReadModeState) 
     {
         self.oldState = oldState
         self.event = event
         self.newState = newState
-        self.userState = userState
+        //self.userState = userState
     }
 }
 
@@ -330,19 +334,19 @@ public func == (lhs: AppReadModeTransition, rhs: AppReadModeTransition) -> Bool 
     let o = lhs.oldState == rhs.oldState
     let e = lhs.event == rhs.event 
     let n = lhs.newState == rhs.newState 
-    let u = lhs.userState == rhs.userState 
-    return o && e && n && u
-}
+    //let u = lhs.userState == rhs.userState 
+    return o && e && n //&& u
+}//
 
 extension AppReadModeTransition : CustomStringConvertible {
     public var description: String {
-        return "AppTransition(oldState:\(self.oldState), event: \(self.event), newState: \(self.newState), userState: \(self.userState)"
+        return "AppTransition(oldState:\(self.oldState), event: \(self.event), newState: \(self.newState)"//, userState: \(self.userState)"
     }
 }
 
 extension AppReadModeTransition :CustomDebugStringConvertible {
     public var debugDescription : String {
-        return  "AppTransition(oldState:\(self.oldState), event: \(self.event), newState: \(self.newState), userState: \(self.userState)" 
+        return  "AppTransition(oldState:\(self.oldState), event: \(self.event), newState: \(self.newState)"//, userState: \(self.userState)" 
     }
 }
 

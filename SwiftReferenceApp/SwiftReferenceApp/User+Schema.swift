@@ -14,7 +14,9 @@ extension User
     { 
         state, event in switch state 
         {
-        //case UserState.Trial(let count): switch event {
+        case UserState.Trial(let count): switch event {
+            
+            
             //case AppEvent.Purchase:
                 //return (UserState.FullAccess, nil)
                 
@@ -23,21 +25,22 @@ extension User
                    //return UserState.Trial(count: count+1) 
                 //})
                 
-            //default: 
-                //return nil
-            //}
+            default: 
+                return nil
+            }
             
-        //case .FullAccess: switch event 
-        //{
+        case .FullAccess: switch event 
+        {
             //case .Save:
                 //return nil
                 
             //case .Purchase:
                 //return nil
+            
                 
-            //default: 
-                //return nil
-            //}
+            default: 
+                return nil
+            }
             
         default: return nil
         }

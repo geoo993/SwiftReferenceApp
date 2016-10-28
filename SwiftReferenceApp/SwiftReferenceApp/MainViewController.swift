@@ -21,7 +21,7 @@ class MainViewController: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        //// saveButton triggers app <- .Save
+        // saveButton triggers app <- .Save
         //saveButton.rx_tap.subscribeNext { app <- .Save }.addDisposableTo(disposeBag) 
        
         //// disable saveButton while appState = .Saving

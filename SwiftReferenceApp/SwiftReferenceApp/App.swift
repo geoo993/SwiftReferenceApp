@@ -25,7 +25,7 @@ public class App
     
     // FIXME: This initialization is incorrect and needs to read state from App.machine.
     //private var _hsmTransitionState = 
-      //  Variable((AppState.Initial, AppEvent.Start, AppState.Idle, UserState.Trial(count: 0))) 
+    //   Variable((AppState.Initial, AppEvent.Start, AppState.Idle, UserState.Trial(count: 0))) 
     
 //    public lazy var hsmTransitionState : ReadOnlySubject<AppTransitionState> = {
 //        return self._hsmTransitionState >- readOnly 
@@ -54,10 +54,10 @@ public class App
         machine  = StateMachine(schema: App.schema, subject: self)
         
         machine.addDidTransitionCallback { oldState, event, newState, trace in 
-//            let hsmState = (oldState, event, newState, self.user.machine.state)
+            //let hsmState = (oldState, event, newState, self.user.machine.state)
             let appTransition = AppTransition( oldState: oldState, event:event, newState: newState, userState: self.user.machine.state ) 
             self.transition.value = appTransition
-//            self._hsmTransitionState.next(hsmState)
+            //self._hsmTransitionState.next(hsmState)
         }
     }
 }
