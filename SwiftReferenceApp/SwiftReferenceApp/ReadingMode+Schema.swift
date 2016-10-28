@@ -15,8 +15,7 @@ extension ReadingMode
     
     public typealias rSchema = GraphableStateMachineSchema<AppReadModeState, AppReadModeEvent, ReadingMode> 
     
-    
-    static var schema = rSchema(initialState: .start) 
+    static var schema = rSchema(initialState: .readMode) 
     { (state, event) in 
         
         
@@ -24,6 +23,30 @@ extension ReadingMode
             
             switch state {
             
+            case AppReadModeState.exploreMode: 
+                switch event {
+                case AppReadModeEvent.switchMode:
+                    print("Explore: now going to read mode")
+                    
+                    return (AppReadModeState.readMode, nil)
+                    //return solution(AppReadModeState.readMode, event: AppReadModeEvent.complete)
+                    
+                default: 
+                    return nil
+                }
+            case AppReadModeState.readMode : 
+                
+                switch event {
+                case AppReadModeEvent.startMode:
+                    print("Read Mode:  now start read mode")
+                    
+                    return (AppReadModeState.start, nil)
+                    //return solution(AppReadModeState.start, event: AppReadModeEvent.readMode)
+                    
+                default: return nil
+                }
+                
+                
             case AppReadModeState.start : 
                 
                 switch event {
@@ -32,6 +55,11 @@ extension ReadingMode
                     
                     return (AppReadModeState.initiasing, nil)
                     //return solution(AppReadModeState.initiasing, event: AppReadModeEvent.begin(focus: 0..<0))
+                case AppReadModeEvent.failed:
+                    print("Start:   initialising failed....., now go to InvestigativeMode")
+                    
+                    return (AppReadModeState.exploreMode, nil)
+                    //return solution(AppReadModeState.exploreMode, event: AppReadModeEvent.begin(focus: 0..<0))
                 default: 
                     //print("default initialising")
                     return nil
@@ -85,7 +113,10 @@ extension ReadingMode
                     
                     return (AppReadModeState.start, nil)
                     //return solution(AppReadModeState.initiasing, event: AppReadModeEvent.complete)
+                case AppReadModeEvent.timedOut:
+                    print("Idle:   spend to long on idle, now go to Explore Mode")
                     
+                    return (AppReadModeState.exploreMode, nil)
                 default: 
                     //print("default resume")
                     return nil

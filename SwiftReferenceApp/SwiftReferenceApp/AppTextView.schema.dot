@@ -1,0 +1,24 @@
+digraph {
+    graph [rankdir=LR]
+
+    0 [label="", shape=plaintext]
+    0 -> 1 [label="START"]
+
+    1 [label="Starting"]
+    2 [label="Initialising"]
+    3 [label="Idle"]
+    4 [label="Reading"]
+    5 [label="Phonics Assistance"]
+    6 [label="Recognising"]
+    7 [label="Computing Next Step"]
+    8 [label="Feedback and score"]
+    9 [label="Ending"]
+    10 [label="Reading Mode"]
+    11 [label="Explore Mode"]
+    12 [label="Listening Mode"]
+    13 [label="Play Mode"]
+    14 [label="Editing Mode"]
+
+    1 -> 2 [label="Disable Scrolling"]
+    10 -> 1 [label="Enable Blur"]
+}

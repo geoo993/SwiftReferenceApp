@@ -13,24 +13,20 @@ import UIKit
 
 public enum AppTextState {
     
-    case ScrollingOn
-    case ScrollingOff
-    case ResetContentOffsetToLatestReading
-    case Fading
-    case ShowTextState
-    case HideTextState
+    case scrollingOn
+    case scrollingOff
+    case resetContentOffsetToLatestReading
+    case fading
     
 }
 
 public enum AppTextEvent {
     
-    case ScrollingEnabled
-    case ScrollingDisabled
-    case UpdateContentOffset
-    case EnableBlur
-    case DisableBlur
-    case ShowText
-    case HideText
+    case scrollingEnabled
+    case scrollingDisabled
+    case updateContentOffset
+    case enableBlur
+    case disableBlur
     
 }
 
@@ -51,6 +47,26 @@ public class AppTextView
     { 
         state, event in switch state 
         {
+            case AppReadModeState.readMode : 
+                switch event {
+                case AppTextEvent.enableBlur:
+                
+                return (AppReadModeState.start, nil)
+                //return solution(AppReadModeState.start, event: AppReadModeEvent.complete)
+                default: return nil
+            }
+            
+            case AppReadModeState.start : 
+                switch event {
+                case AppTextEvent.scrollingDisabled:
+                    
+                    return (AppReadModeState.initiasing, nil)
+                //return solution(AppReadModeState.initiasing, event: AppReadModeEvent.complete)
+                default: return nil
+            }
+            
+            
+            
             default: 
             return nil
             
@@ -67,18 +83,16 @@ extension AppTextEvent: DOTLabelable
     
     public static var DOTLabelableItems: [AppTextEvent] 
     {
-        return [.ScrollingEnabled, .ScrollingDisabled, .UpdateContentOffset, .EnableBlur, .DisableBlur, .ShowText, .HideText]
+        return [.scrollingEnabled, .scrollingDisabled, .updateContentOffset, .enableBlur, .disableBlur]
     }
     
     public var DOTLabel: String {
         switch self {
-        case ScrollingEnabled : return "Enable Scrolling"
-        case ScrollingDisabled : return "Disable Scrolling"
-        case UpdateContentOffset: return "Update Content Offset"
-        case EnableBlur: return "Enable Blur"
-        case DisableBlur : return "Disable Blur"
-        case ShowText: return "Show Text"
-        case HideText: return "Hide Text"
+        case scrollingEnabled : return "Enable Scrolling"
+        case scrollingDisabled : return "Disable Scrolling"
+        case updateContentOffset: return "Update Content Offset"
+        case enableBlur: return "Enable Blur"
+        case disableBlur : return "Disable Blur"
         }
     }
 }

@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //App.schema.saveDOTDigraphIfRunningInSimulator(filepathRelativeToCurrentFile: "App.schema.dot")
         //return app.set(User()) 
         ReadingMode.schema.saveDOTDigraphIfRunningInSimulator(filepathRelativeToCurrentFile: "ReadingMode.schema.dot")
+        AppTextView.schema.saveDOTDigraphIfRunningInSimulator(filepathRelativeToCurrentFile: "AppTextView.schema.dot")
         return true
     }
 

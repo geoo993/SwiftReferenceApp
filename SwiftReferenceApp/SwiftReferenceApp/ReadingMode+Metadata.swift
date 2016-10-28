@@ -36,6 +36,7 @@ public enum AppPageState {
     case InCompletedPage
 }
 
+
 //read mode
 public enum AppReadModeState {
     
@@ -51,9 +52,12 @@ public enum AppReadModeState {
     //case CompletedState//complete, this is when you finished reading the page and touch pointer is not touched
     case feedback//feedback state to show score and progress
     case end//stop, reading has ended and you viewed your score
+    case readMode, editingMode, listeningMode, playMode, exploreMode// all modes
 }
 
 public enum AppReadModeEvent  {
+    case switchMode// switch mode
+    case startMode//start mode
     case begin(focus: Range<Int>)//go to start when initialised
     //case Resume//this is to continue reading when paused
     case failed//when something fails
@@ -63,6 +67,7 @@ public enum AppReadModeEvent  {
     //case pause//when finger is lifted, you pause when its been less than 30 sec and false to all other ifs
     //case end//when finger is lifted, you ended when its been more than 30 sec and true to all other ifs 
     case reset//reset and go to the beginning
+    case timedOut//after idle for long, App timed out
     case startFeedback//activate feedback when completed
 }
 
@@ -70,7 +75,8 @@ extension AppReadModeEvent : Equatable { }
 
 public func ==(lhs: AppReadModeEvent, rhs: AppReadModeEvent) -> Bool {
     switch (lhs, rhs) {
-    case (.begin, .begin), 
+    case (.startMode, .startMode),
+        (.begin, .begin), 
          (.failed, .failed),
          (.startReading, .startReading),
         // (.Resume, .Resume),
@@ -78,6 +84,7 @@ public func ==(lhs: AppReadModeEvent, rhs: AppReadModeEvent) -> Bool {
         //(.Pause, .Pause),
         (.complete, .complete),
         (.reset, .reset),
+        (.timedOut, .timedOut),
         (.startFeedback, .startFeedback):
             return true
     default: return false
@@ -252,7 +259,7 @@ extension AppReadModeState: DOTLabelable {
     
     public static var DOTLabelableItems: [AppReadModeState] 
     {
-        return [ .start, .initiasing, .idle, .reading, .phonicsAssistance, .recognising, .computingNextStep, .feedback, .end]
+        return [ .start, .initiasing, .idle, .reading, .phonicsAssistance, .recognising, .computingNextStep, .feedback, .end, .readMode, .exploreMode, listeningMode, .playMode, .editingMode]
     }
     
     public var DOTLabel: String {
@@ -266,6 +273,11 @@ extension AppReadModeState: DOTLabelable {
         case .computingNextStep : return "Computing Next Step"
         case .feedback: return "Feedback and score"
         case .end : return "Ending"
+        case .readMode: return "Reading Mode"
+        case .exploreMode: return"Explore Mode"
+        case .listeningMode: return "Listening Mode"
+        case .playMode: return "Play Mode"
+        case .editingMode: return "Editing Mode"
         }
     }
 }
@@ -276,11 +288,13 @@ extension AppReadModeEvent: DOTLabelable
     
     public static var DOTLabelableItems: [AppReadModeEvent] 
     {
-        return [.begin(focus: 0..<0), .startReading, .startPhonicsAssistance, .failed, .complete, .reset, .startFeedback]
+        return [.switchMode, .startMode, .begin(focus: 0..<0), .startReading, .startPhonicsAssistance, .failed, .complete, .reset, .timedOut, .startFeedback]
     }
     
     public var DOTLabel: String {
         switch self {
+        case .startMode: return "Start Mode"
+        case .switchMode: return "Switch Mode"
         case .begin: return "Begin"
         case .startReading: return "Start Reading"
         case .startPhonicsAssistance: return "Start Phonics Assistance"
@@ -289,6 +303,7 @@ extension AppReadModeEvent: DOTLabelable
         //case .Resume: return "Resume"
         case .complete: return "Complete"
         case .reset: return "Reset"
+        case .timedOut: return "Timed Out"
         case .startFeedback: return "Start Feedback"
         }
     }
@@ -313,19 +328,20 @@ extension AppReadModeEvent : CustomDebugStringConvertible {
 }
 
 
-public typealias AppReadModeTransitionState = (AppReadModeState, AppReadModeEvent, AppReadModeState)
+public typealias AppReadModeTransitionState = (AppReadModeState, AppReadModeEvent, AppReadModeState, AppTextEvent)
 
 public struct AppReadModeTransition {
     public let oldState : AppReadModeState
     public let event : AppReadModeEvent
     public let newState : AppReadModeState
+    public let textViewEvent : AppTextEvent
     
-    public init(oldState: AppReadModeState, event: AppReadModeEvent, newState: AppReadModeState) 
+    public init(oldState: AppReadModeState, event: AppReadModeEvent, newState: AppReadModeState, textViewEvent: AppTextEvent) 
     {
         self.oldState = oldState
         self.event = event
         self.newState = newState
-        //self.userState = userState
+        self.textViewEvent = textViewEvent
     }
 }
 
@@ -334,19 +350,19 @@ public func == (lhs: AppReadModeTransition, rhs: AppReadModeTransition) -> Bool 
     let o = lhs.oldState == rhs.oldState
     let e = lhs.event == rhs.event 
     let n = lhs.newState == rhs.newState 
-    //let u = lhs.userState == rhs.userState 
-    return o && e && n //&& u
-}//
+    let t = lhs.textViewEvent == rhs.textViewEvent 
+    return o && e && n && t
+}
 
 extension AppReadModeTransition : CustomStringConvertible {
     public var description: String {
-        return "AppTransition(oldState:\(self.oldState), event: \(self.event), newState: \(self.newState)"//, userState: \(self.userState)"
+        return "AppTransition(oldState:\(self.oldState), event: \(self.event), newState: \(self.newState), textViewEvent: \(self.textViewEvent)"
     }
 }
 
 extension AppReadModeTransition :CustomDebugStringConvertible {
     public var debugDescription : String {
-        return  "AppTransition(oldState:\(self.oldState), event: \(self.event), newState: \(self.newState)"//, userState: \(self.userState)" 
+        return  "AppTransition(oldState:\(self.oldState), event: \(self.event), newState: \(self.newState), userState: \(self.textViewEvent)" 
     }
 }
 
